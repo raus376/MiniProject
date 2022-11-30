@@ -1,6 +1,8 @@
 package com.ecom.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,33 +44,70 @@ public class ProuductServiceImpl implements ProductService{
 
 	@Override
 	public Product updateProduct(Product product) throws ProductException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Optional<Product> prod=pRepo.findById(product.getProductId());
+		
+		if(prod.isPresent()) {
+			return pRepo.save(product);
+		}
+		throw new ProductException("product not found");
 	}
 
 	@Override
 	public Product viewProduct(Integer id) throws ProductException {
-		// TODO Auto-generated method stub
-		return null;
+	
+		Optional<Product> prod=pRepo.findById(id);
+		
+		if(prod.isPresent()) {
+			Product p= prod.get();
+			return p;
+		}
+		throw new ProductException("product not found");
 	}
 
 	@Override
 	public List<Product> viewProductByCategory(String cname) throws ProductException {
 		// TODO Auto-generated method stub
-		return null;
+		 List<Product> ans=new ArrayList<>();
+	  List<Product> list =pRepo.findAll();
+	  if(list.size()>0) {
+		 
+		  for(int i=0;i<list.size();i++) {
+			  if(list.get(i).getCompanyName().equals(cname)) {
+				  ans.add(list.get(i));
+			  }
+		  }
+		 return ans; 
+	  }
+		throw new ProductException("Product not availble in cart");
 	}
 
 	@Override
 	public Product removeProduct(Integer pid) throws ProductException {
-		// TODO Auto-generated method stub
-		return null;
+		
+	Optional<Product> prod= pRepo.findById(pid);
+	
+	if(prod.isPresent()) {
+		Product p=prod.get();
+		pRepo.delete(prod.get());
+		
+		return p;
+	}
+	throw new ProductException("Product not found");
+	  
 	}
 
 	@Override
 	public List<Product> viewAllProducts() throws ProductException {
-		// TODO Auto-generated method stub
-		return null;
+		
+	List<Product> products=pRepo.findAll();
+	if(products.size()>0) {
+		return products;
 	}
+	throw new ProductException("Product not found");
+	}
+	
+	
 
 	
 	

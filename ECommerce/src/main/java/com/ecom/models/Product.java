@@ -31,7 +31,7 @@ public class Product {
 	private String productName;
 	
 	@Min(value = 1, message = "Please Enter a valid price")
-	private Double price;
+	private Integer price;
 	
 	
 	private String color;

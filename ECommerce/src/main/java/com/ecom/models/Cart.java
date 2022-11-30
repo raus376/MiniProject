@@ -31,6 +31,8 @@ public class Cart {
 //	@OneToOne(cascade = CascadeType.ALL)
 //	private User user;
 	
+	private long cartValue;
+	
 //	@JoinTable(name = "carts_product", joinColumns = @JoinColumn(name="cart_id", referencedColumnName = "cartId"))
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="cDetails")
