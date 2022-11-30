@@ -55,9 +55,28 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List<Product> removeProductFromCart(Integer productId) throws CartException {
-		// TODO Auto-generated method stub
-		return null;
+	public Product removeProductFromCart(Integer productId) throws CartException {
+
+		Optional<Product> prod=pRepo.findById(productId);
+		if(prod.isPresent()) {
+			
+			Product p=prod.get();
+			int q=p.getQuantity();
+			
+			q-=1;
+			
+			p.setQuantity(q);
+			Product pp=prod.get();
+			long total=p.getQuantity()*pp.getPrice();
+			
+			pRepo.save(pp);
+			
+			Cart cr=p.getCDetails();
+			cr.setCartValue(total);
+			cRepo.save(cr);
+			return prod.get();
+		}
+		throw new CartException("product not found");
 	}
 
 	@Override

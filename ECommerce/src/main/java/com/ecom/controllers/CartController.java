@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecom.exceptions.CartException;
 import com.ecom.models.Cart;
+import com.ecom.models.Product;
 import com.ecom.services.CartService;
 import com.ecom.services.ProductService;
 
@@ -29,4 +30,11 @@ public class CartController {
 		return new ResponseEntity<>(cart,HttpStatus.ACCEPTED);
 	}
 
+	@PostMapping("/removeProductToCart/{pId}")
+	public ResponseEntity<Product> removeProductToCart(@PathVariable Integer pId) throws CartException{
+		
+		Product cart=cService.removeProductFromCart(pId);
+		
+		return new ResponseEntity<>(cart,HttpStatus.ACCEPTED);
+	}
 }
