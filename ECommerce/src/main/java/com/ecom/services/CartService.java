@@ -15,6 +15,6 @@ public interface CartService {
 	
 	public Cart removeAllProducts() throws CartException;
 	
-	public List<Product> viewAllProducts()  throws CartException;
+	public List<Product> viewAllProducts(Integer cId)  throws CartException;
 
 }

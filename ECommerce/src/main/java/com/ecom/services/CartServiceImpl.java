@@ -86,9 +86,15 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List<Product> viewAllProducts() throws CartException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> viewAllProducts(Integer cId) throws CartException {
+
+         Optional<Cart> list=   cRepo.findById(cId);
+         
+         if(list.isPresent()) {
+        	 List<Product> pList=list.get().getProducts();
+        	 return pList;
+         }
+         throw new CartException("Product not present");
 	}
 	
 	
